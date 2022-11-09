@@ -10,12 +10,7 @@
 
 
 
-## Authors
-
-👤 **yasinabdmahmood**
-
-- GitHub: [@yasinabdmahmood](https://github.com/yasinabdmahmood)
-- LinkedIn: [yaseen](https://www.linkedin.com/in/yaseen-abdalwahid/)
+## Author
 
 👤**Elie Harfouche**
 

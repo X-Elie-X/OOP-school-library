@@ -1,9 +1,8 @@
 require './nameable'
 class Base < Nameable
-  def initialize(nameable)
-    super()
-    @nameable = nameable
-  end
+  attr_accessor :nameable
+
+  @nameable = nameable
 
   def correct_name
     @nameable.correct_name

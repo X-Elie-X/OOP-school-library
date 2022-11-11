@@ -87,38 +87,39 @@ class List
   end
   # rubocop:disable Metrics/CyclomaticComplexity
 
-def option_list
-  puts
-  puts 'Choose an option by entering a Number: '
-  puts '1) - List All Books.'
-  puts '2) - List All People.'
-  puts '3) - Ceart a Person.'
-  puts '4) - Ceart a Book.'
-  puts '5) - Creat a Rental.'
-  puts '6) - List All rentals By ID.'
-  puts '7) - Exit '
-end
-def option_lists
-  option_list
-  input = gets.chomp.to_i
-  case input
-  when 1
-    list_all_books
-  when 2
-    list_all_people
-  when 3
-    create_person
-  when 4
-    create_book
-  when 5
-    create_rental
-  when 6
-    rental_list
-  when 7
-    puts 'Thank you for using  School Library'
-    exit
+  def option_list
+    puts
+    puts 'Choose an option by entering a Number: '
+    puts '1)  List All Books.'
+    puts '2)  List All People.'
+    puts '3)  Ceart a Person.'
+    puts '4)  Ceart a Book.'
+    puts '5)  Creat a Rental.'
+    puts '6)  List All rentals By ID.'
+    puts '7)  Exit '
   end
-  option_lists
-end
-# rubocop:enable Metrics/CyclomaticComplexity
+
+  def option_lists
+    option_list
+    input = gets.chomp.to_i
+    case input
+    when 1
+      list_all_books
+    when 2
+      list_all_people
+    when 3
+      create_person
+    when 4
+      create_book
+    when 5
+      create_rental
+    when 6
+      rental_list
+    when 7
+      puts 'Thank you for using  School Library'
+      exit
+    end
+    option_lists
+  end
+  # rubocop:enable Metrics/CyclomaticComplexity
 end

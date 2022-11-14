@@ -20,9 +20,8 @@ class List
   # List all people method
   def list_all_people
     puts 'There are no people in the list. Kindly add at least one person' if @people.empty?
-    @people.each_with_index do |person, index|
-      puts "(#{index + 1}) [#{person.class}] => Id: #{person.id}, Name: #{person.name}, Age: #{person.age}"
-    end
+    @people.each { |person| puts "Name: #{person.name}, Age: #{person.age}" }
+
   end
 
   def create_person
@@ -31,19 +30,22 @@ class List
     case selection
     when 1
       print 'Add Student Name:'
-      name :gets.chomp
+      name = gets.chomp
       print 'Add Age:'
       age = gets.chomp
-      student = student.new(age, name)
+      print 'Add ClassRoom:'
+      classroom = gets.chomp
+      student = Student.new(age, name)
       @people << student
       puts "#{name} Congratulation (^_^) New Student"
     when 2
       print 'Add Teacher Name:'
-      name :gets.chomp
+      name = gets.chomp
       print 'Add Age:'
       age = gets.chomp
-      teacher = teacher.new(age, name)
+      teacher = Teacher.new(age, name)
       @people << teacher
+      puts @people.each {|pe| p pe.name}
       puts "#{name} Congratulation ($_$) New Teacher"
     end
   end
@@ -52,7 +54,7 @@ class List
     print 'Add title: '
     title = gets.chomp
     print 'Add Author: '
-    author gets.chomp
+    author = gets.chomp
     book = Book.new(title, author)
     @books << book
     puts "#{title} By #{author} was Created"
@@ -60,10 +62,10 @@ class List
 
   def create_rental
     puts 'Select a book by Id: '
-    books_list
+    list_all_books
     book_id = gets.chomp.to_i
     puts 'Select Person By Id: '
-    list_people
+    list_all_people
     person_id = gets.chomp.to_i
     puts 'Rental Sarting Date ex:(YYYY/MM/DD)'
     date = gets.chomp.to_s
@@ -79,7 +81,7 @@ class List
     @rental.each do |rental|
       if rental.person.id == id
         puts "Person: #{rental.person.name} ,
-         Date: #{rental.date}, Book : #{rental.book.title} BY #{rental.book.author}"
+        Date: #{rental.date}, Book : #{rental.book.title} BY #{rental.book.author}"
       else
         puts 'No Rental Found Check the Proper ID '
       end

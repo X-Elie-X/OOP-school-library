@@ -6,8 +6,8 @@ require './book'
 class List
   def initialize
     @books = []
-    @rental = []
     @people = []
+    @rentals = []
   end
 
   def list_all_books
@@ -20,10 +20,12 @@ class List
   # List all people method
   def list_all_people
     puts 'There are no people in the list. Kindly add at least one person' if @people.empty?
-    @people.each { |person| puts "Name: #{person.name}, Age: #{person.age}" }
-
+    @people.each_with_index do |person, index|
+      puts "(#{index + 1}) [#{person.class}] => Id: #{person.id}, Name: #{person.name}, Age: #{person.age}"
+    end
   end
 
+  # rubocop:disable Metrics/MethodLength
   def create_person
     puts 'If you are a Student insert (1) Or If you are a Teacher insert (2)'
     selection = gets.chomp.to_i
@@ -33,9 +35,7 @@ class List
       name = gets.chomp
       print 'Add Age:'
       age = gets.chomp
-      print 'Add ClassRoom:'
-      classroom = gets.chomp
-      student = Student.new(age, name)
+      student = Student.new('classroom', age, name)
       @people << student
       puts "#{name} Congratulation (^_^) New Student"
     when 2
@@ -43,12 +43,14 @@ class List
       name = gets.chomp
       print 'Add Age:'
       age = gets.chomp
-      teacher = Teacher.new(age, name)
+      print 'Enter the teacher\'s specialization: '
+      specialization = gets.chomp
+      teacher = Teacher.new(age, name, specialization)
       @people << teacher
-      puts @people.each {|pe| p pe.name}
       puts "#{name} Congratulation ($_$) New Teacher"
     end
   end
+  # rubocop:enable Metrics/MethodLength
 
   def create_book
     print 'Add title: '
@@ -60,30 +62,33 @@ class List
     puts "#{title} By #{author} was Created"
   end
 
-  def create_rental
+  def create_rental()
     puts 'Select a book by Id: '
     list_all_books
     book_id = gets.chomp.to_i
     puts 'Select Person By Id: '
     list_all_people
     person_id = gets.chomp.to_i
-    puts 'Rental Sarting Date ex:(YYYY/MM/DD)'
-    date = gets.chomp.to_s
-    puts ' Date Added'
-    @rental.push(Rental.new(date, @people[person_id - 1], @books[book_id - 1]))
+    puts 'Person Selected'
+    puts 'Enter Date (YYYY/MM/DD)'
+    date = gets.chomp
+    puts 'Date Added'
+    @rentals.push(Rental.new(date, @people[person_id - 1], @books[book_id - 1]))
     puts ' Congratulation You Get the  Book '
   end
 
   def rental_list
-    print 'Enter Person ID: '
+    print 'Enter Person\'s ID: '
     id = gets.chomp.to_i
-    puts ' List of Rentals Books: '
-    @rental.each do |rental|
+    puts 'List of all Rentals books: '
+    @rentals.each do |rental|
       if rental.person.id == id
-        puts "Person: #{rental.person.name} ,
-        Date: #{rental.date}, Book : #{rental.book.title} BY #{rental.book.author}"
+        puts "Person: #{rental.person.name}
+        Date: #{rental.date},
+        Book '#{rental.book.title}' written by #{rental.book.author}"
       else
-        puts 'No Rental Found Check the Proper ID '
+        puts 'Checking for person......'
+        puts 'No rentals found for the given ID for person'
       end
     end
   end
@@ -91,12 +96,13 @@ class List
 
   def option_list
     puts
+    puts 'Welcome To The Main Menu'
     puts 'Choose an option by entering a Number: '
     puts '1)  List All Books.'
     puts '2)  List All People.'
-    puts '3)  Ceart a Person.'
-    puts '4)  Ceart a Book.'
-    puts '5)  Creat a Rental.'
+    puts '3)  Create a Person.'
+    puts '4)  Create a Book.'
+    puts '5)  Create a Rental.'
     puts '6)  List All rentals By ID.'
     puts '7)  Exit '
   end

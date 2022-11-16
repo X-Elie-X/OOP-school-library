@@ -1,8 +1,9 @@
 require './nameable'
-require './rental'
+require('./rental')
+
 class Person < Nameable
   attr_reader :id
-  attr_writer :name, :age, :rental
+  attr_accessor :name, :age, :rentals
 
   def initialize(age, name = 'Unknown', parent_permission: true)
     super()
@@ -10,22 +11,24 @@ class Person < Nameable
     @name = name
     @age = age
     @parent_permission = parent_permission
-    @rental = []
+    @rentals = []
   end
 
   def can_use_services?
     @parent_permission || is_of_age?
-  end
-  private :to_age?
-  def to_age?
-    @age >= 18
   end
 
   def correct_name
     @name
   end
 
-  def add_rental(person, date)
-    Rental.new(date, person, self)
+  def add_book_rentals(book, date)
+    Rental.new(date, book, self)
+  end
+
+  private
+
+  def to_age?
+    @age >= 18
   end
 end
